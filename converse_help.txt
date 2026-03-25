@@ -1,0 +1,3156 @@
+Help on method converse in module botocore.client:
+
+converse(*args, **kwargs) method of botocore.client.BedrockRuntime instance
+    Sends messages to the specified Amazon Bedrock model. ``Converse`` provides a consistent interface that works with all models that support messages. This allows you to write code once and use it with different models. If a model has unique inference parameters, you can also pass those unique parameters to the model.
+
+
+
+    Amazon Bedrock doesn't store any text, images, or documents that you provide as content. The data is only used to generate the response.
+
+
+
+    You can submit a prompt by including it in the ``messages`` field, specifying the ``modelId`` of a foundation model or inference profile to run inference on it, and including any other fields that are relevant to your use case.
+
+
+
+    You can also submit a prompt from Prompt management by specifying the ARN of the prompt version and including a map of variables to values in the ``promptVariables`` field. You can append more messages to the prompt by using the ``messages`` field. If you use a prompt from Prompt management, you can't include the following fields in the request: ``additionalModelRequestFields``, ``inferenceConfig``, ``system``, or ``toolConfig``. Instead, these fields must be defined through Prompt management. For more information, see `Use a prompt from Prompt management <https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management-use.html>`__.
+
+
+
+    For information about the Converse API, see *Use the Converse API* in the *Amazon Bedrock User Guide*. To use a guardrail, see *Use a guardrail with the Converse API* in the *Amazon Bedrock User Guide*. To use a tool with a model, see *Tool use (Function calling)* in the *Amazon Bedrock User Guide*
+
+
+
+    For example code, see *Converse API examples* in the *Amazon Bedrock User Guide*.
+
+
+
+    This operation requires permission for the ``bedrock:InvokeModel`` action.
+
+
+
+    .. warning::
+
+
+
+      To deny all inference access to resources that you specify in the modelId field, you need to deny access to the ``bedrock:InvokeModel`` and ``bedrock:InvokeModelWithResponseStream`` actions. Doing this also denies access to the resource through the base inference actions ( `InvokeModel <https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_InvokeModel.html>`__ and `InvokeModelWithResponseStream <https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_InvokeModelWithResponseStream.html>`__). For more information see `Deny access for inference on specific models <https://docs.aws.amazon.com/bedrock/latest/userguide/security_iam_id-based-policy-examples.html#security_iam_id-based-policy-examples-deny-inference>`__.
+
+
+
+
+
+    For troubleshooting some of the common errors you might encounter when using the ``Converse`` API, see `Troubleshooting Amazon Bedrock API Error Codes <https://docs.aws.amazon.com/bedrock/latest/userguide/troubleshooting-api-error-codes.html>`__ in the Amazon Bedrock User Guide
+
+
+
+    See also: `AWS API Documentation <https://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/Converse>`_
+
+
+    **Request Syntax**
+    ::
+
+      response = client.converse(
+          modelId='string',
+          messages=[
+              {
+                  'role': 'user'|'assistant',
+                  'content': [
+                      {
+                          'text': 'string',
+                          'image': {
+                              'format': 'png'|'jpeg'|'gif'|'webp',
+                              'source': {
+                                  'bytes': b'bytes',
+                                  's3Location': {
+                                      'uri': 'string',
+                                      'bucketOwner': 'string'
+                                  }
+                              },
+                              'error': {
+                                  'message': 'string'
+                              }
+                          },
+                          'document': {
+                              'format': 'pdf'|'csv'|'doc'|'docx'|'xls'|'xlsx'|'html'|'txt'|'md',
+                              'name': 'string',
+                              'source': {
+                                  'bytes': b'bytes',
+                                  's3Location': {
+                                      'uri': 'string',
+                                      'bucketOwner': 'string'
+                                  },
+                                  'text': 'string',
+                                  'content': [
+                                      {
+                                          'text': 'string'
+                                      },
+                                  ]
+                              },
+                              'context': 'string',
+                              'citations': {
+                                  'enabled': True|False
+                              }
+                          },
+                          'video': {
+                              'format': 'mkv'|'mov'|'mp4'|'webm'|'flv'|'mpeg'|'mpg'|'wmv'|'three_gp',
+                              'source': {
+                                  'bytes': b'bytes',
+                                  's3Location': {
+                                      'uri': 'string',
+                                      'bucketOwner': 'string'
+                                  }
+                              }
+                          },
+                          'audio': {
+                              'format': 'mp3'|'opus'|'wav'|'aac'|'flac'|'mp4'|'ogg'|'mkv'|'mka'|'x-aac'|'m4a'|'mpeg'|'mpga'|'pcm'|'webm',
+                              'source': {
+                                  'bytes': b'bytes',
+                                  's3Location': {
+                                      'uri': 'string',
+                                      'bucketOwner': 'string'
+                                  }
+                              },
+                              'error': {
+                                  'message': 'string'
+                              }
+                          },
+                          'toolUse': {
+                              'toolUseId': 'string',
+                              'name': 'string',
+                              'input': {...}|[...]|123|123.4|'string'|True|None,
+                              'type': 'server_tool_use'
+                          },
+                          'toolResult': {
+                              'toolUseId': 'string',
+                              'content': [
+                                  {
+                                      'json': {...}|[...]|123|123.4|'string'|True|None,
+                                      'text': 'string',
+                                      'image': {
+                                          'format': 'png'|'jpeg'|'gif'|'webp',
+                                          'source': {
+                                              'bytes': b'bytes',
+                                              's3Location': {
+                                                  'uri': 'string',
+                                                  'bucketOwner': 'string'
+                                              }
+                                          },
+                                          'error': {
+                                              'message': 'string'
+                                          }
+                                      },
+                                      'document': {
+                                          'format': 'pdf'|'csv'|'doc'|'docx'|'xls'|'xlsx'|'html'|'txt'|'md',
+                                          'name': 'string',
+                                          'source': {
+                                              'bytes': b'bytes',
+                                              's3Location': {
+                                                  'uri': 'string',
+                                                  'bucketOwner': 'string'
+                                              },
+                                              'text': 'string',
+                                              'content': [
+                                                  {
+                                                      'text': 'string'
+                                                  },
+                                              ]
+                                          },
+                                          'context': 'string',
+                                          'citations': {
+                                              'enabled': True|False
+                                          }
+                                      },
+                                      'video': {
+                                          'format': 'mkv'|'mov'|'mp4'|'webm'|'flv'|'mpeg'|'mpg'|'wmv'|'three_gp',
+                                          'source': {
+                                              'bytes': b'bytes',
+                                              's3Location': {
+                                                  'uri': 'string',
+                                                  'bucketOwner': 'string'
+                                              }
+                                          }
+                                      },
+                                      'searchResult': {
+                                          'source': 'string',
+                                          'title': 'string',
+                                          'content': [
+                                              {
+                                                  'text': 'string'
+                                              },
+                                          ],
+                                          'citations': {
+                                              'enabled': True|False
+                                          }
+                                      }
+                                  },
+                              ],
+                              'status': 'success'|'error',
+                              'type': 'string'
+                          },
+                          'guardContent': {
+                              'text': {
+                                  'text': 'string',
+                                  'qualifiers': [
+                                      'grounding_source'|'query'|'guard_content',
+                                  ]
+                              },
+                              'image': {
+                                  'format': 'png'|'jpeg',
+                                  'source': {
+                                      'bytes': b'bytes'
+                                  }
+                              }
+                          },
+                          'cachePoint': {
+                              'type': 'default',
+                              'ttl': '5m'|'1h'
+                          },
+                          'reasoningContent': {
+                              'reasoningText': {
+                                  'text': 'string',
+                                  'signature': 'string'
+                              },
+                              'redactedContent': b'bytes'
+                          },
+                          'citationsContent': {
+                              'content': [
+                                  {
+                                      'text': 'string'
+                                  },
+                              ],
+                              'citations': [
+                                  {
+                                      'title': 'string',
+                                      'source': 'string',
+                                      'sourceContent': [
+                                          {
+                                              'text': 'string'
+                                          },
+                                      ],
+                                      'location': {
+                                          'web': {
+                                              'url': 'string',
+                                              'domain': 'string'
+                                          },
+                                          'documentChar': {
+                                              'documentIndex': 123,
+                                              'start': 123,
+                                              'end': 123
+                                          },
+                                          'documentPage': {
+                                              'documentIndex': 123,
+                                              'start': 123,
+                                              'end': 123
+                                          },
+                                          'documentChunk': {
+                                              'documentIndex': 123,
+                                              'start': 123,
+                                              'end': 123
+                                          },
+                                          'searchResultLocation': {
+                                              'searchResultIndex': 123,
+                                              'start': 123,
+                                              'end': 123
+                                          }
+                                      }
+                                  },
+                              ]
+                          },
+                          'searchResult': {
+                              'source': 'string',
+                              'title': 'string',
+                              'content': [
+                                  {
+                                      'text': 'string'
+                                  },
+                              ],
+                              'citations': {
+                                  'enabled': True|False
+                              }
+                          }
+                      },
+                  ]
+              },
+          ],
+          system=[
+              {
+                  'text': 'string',
+                  'guardContent': {
+                      'text': {
+                          'text': 'string',
+                          'qualifiers': [
+                              'grounding_source'|'query'|'guard_content',
+                          ]
+                      },
+                      'image': {
+                          'format': 'png'|'jpeg',
+                          'source': {
+                              'bytes': b'bytes'
+                          }
+                      }
+                  },
+                  'cachePoint': {
+                      'type': 'default',
+                      'ttl': '5m'|'1h'
+                  }
+              },
+          ],
+          inferenceConfig={
+              'maxTokens': 123,
+              'temperature': ...,
+              'topP': ...,
+              'stopSequences': [
+                  'string',
+              ]
+          },
+          toolConfig={
+              'tools': [
+                  {
+                      'toolSpec': {
+                          'name': 'string',
+                          'description': 'string',
+                          'inputSchema': {
+                              'json': {...}|[...]|123|123.4|'string'|True|None
+                          },
+                          'strict': True|False
+                      },
+                      'systemTool': {
+                          'name': 'string'
+                      },
+                      'cachePoint': {
+                          'type': 'default',
+                          'ttl': '5m'|'1h'
+                      }
+                  },
+              ],
+              'toolChoice': {
+                  'auto': {}
+                  ,
+                  'any': {}
+                  ,
+                  'tool': {
+                      'name': 'string'
+                  }
+              }
+          },
+          guardrailConfig={
+              'guardrailIdentifier': 'string',
+              'guardrailVersion': 'string',
+              'trace': 'enabled'|'disabled'|'enabled_full'
+          },
+          additionalModelRequestFields={...}|[...]|123|123.4|'string'|True|None,
+          promptVariables={
+              'string': {
+                  'text': 'string'
+              }
+          },
+          additionalModelResponseFieldPaths=[
+              'string',
+          ],
+          requestMetadata={
+              'string': 'string'
+          },
+          performanceConfig={
+              'latency': 'standard'|'optimized'
+          },
+          serviceTier={
+              'type': 'priority'|'default'|'flex'|'reserved'
+          },
+          outputConfig={
+              'textFormat': {
+                  'type': 'json_schema',
+                  'structure': {
+                      'jsonSchema': {
+                          'schema': 'string',
+                          'name': 'string',
+                          'description': 'string'
+                      }
+                  }
+              }
+          }
+      )
+
+    :type modelId: string
+    :param modelId: **[REQUIRED]**
+
+      Specifies the model or throughput with which to run inference, or the prompt resource to use in inference. The value depends on the resource that you use:
+
+
+
+
+      * If you use a base model, specify the model ID or its ARN. For a list of model IDs for base models, see `Amazon Bedrock base model IDs (on-demand throughput) <https://docs.aws.amazon.com/bedrock/latest/userguide/model-ids.html#model-ids-arns>`__ in the Amazon Bedrock User Guide.
+
+      * If you use an inference profile, specify the inference profile ID or its ARN. For a list of inference profile IDs, see `Supported Regions and models for cross-region inference <https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference-support.html>`__ in the Amazon Bedrock User Guide.
+
+      * If you use a provisioned model, specify the ARN of the Provisioned Throughput. For more information, see `Run inference using a Provisioned Throughput <https://docs.aws.amazon.com/bedrock/latest/userguide/prov-thru-use.html>`__ in the Amazon Bedrock User Guide.
+
+      * If you use a custom model, first purchase Provisioned Throughput for it. Then specify the ARN of the resulting provisioned model. For more information, see `Use a custom model in Amazon Bedrock <https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-use.html>`__ in the Amazon Bedrock User Guide.
+
+      * To include a prompt that was defined in `Prompt management <https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management.html>`__, specify the ARN of the prompt version to use.
+
+
+
+
+      The Converse API doesn't support `imported models <https://docs.aws.amazon.com/bedrock/latest/userguide/model-customization-import-model.html>`__.
+
+
+
+
+    :type messages: list
+    :param messages:
+
+      The messages that you want to send to the model.
+
+
+
+
+      - *(dict) --*
+
+        A message input, or returned from, a call to `Converse <https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_Converse.html>`__ or `ConverseStream <https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_ConverseStream.html>`__.
+
+
+
+
+        - **role** *(string) --* **[REQUIRED]**
+
+          The role that the message plays in the message.
+
+
+
+
+        - **content** *(list) --* **[REQUIRED]**
+
+          The message content. Note the following restrictions:
+
+
+
+
+          * You can include up to 20 images. Each image's size, height, and width must be no more than 3.75 MB, 8000 px, and 8000 px, respectively.
+
+          * You can include up to five documents. Each document's size must be no more than 4.5 MB.
+
+          * If you include a ``ContentBlock`` with a ``document`` field in the array, you must also include a ``ContentBlock`` with a ``text`` field.
+
+          * You can only include images and documents if the ``role`` is ``user``.
+
+
+
+
+
+          - *(dict) --*
+
+            A block of content for a message that you pass to, or receive from, a model with the `Converse <https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_Converse.html>`__ or `ConverseStream <https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_ConverseStream.html>`__ API operations.
+
+            .. note::    This is a Tagged Union structure. Only one of the     following top level keys can be set: ``text``, ``image``, ``document``, ``video``, ``audio``, ``toolUse``, ``toolResult``, ``guardContent``, ``cachePoint``, ``reasoningContent``, ``citationsContent``, ``searchResult``.
+
+
+            - **text** *(string) --*
+
+              Text to include in the message.
+
+
+
+
+            - **image** *(dict) --*
+
+              Image to include in the message.
+
+
+
+              .. note::
+
+
+
+                This field is only supported by Anthropic Claude 3 models.
+
+
+
+
+
+
+              - **format** *(string) --* **[REQUIRED]**
+
+                The format of the image.
+
+
+
+
+              - **source** *(dict) --* **[REQUIRED]**
+
+                The source for the image.
+
+                .. note::    This is a Tagged Union structure. Only one of the     following top level keys can be set: ``bytes``, ``s3Location``.
+
+
+                - **bytes** *(bytes) --*
+
+                  The raw image bytes for the image. If you use an AWS SDK, you don't need to encode the image bytes in base64.
+
+
+
+
+                - **s3Location** *(dict) --*
+
+                  The location of an image object in an Amazon S3 bucket. To see which models support S3 uploads, see `Supported models and features for Converse <https://docs.aws.amazon.com/bedrock/latest/userguide/conversation-inference-supported-models-features.html>`__.
+
+
+
+
+                  - **uri** *(string) --* **[REQUIRED]**
+
+                    An object URI starting with ``s3://``.
+
+
+
+
+                  - **bucketOwner** *(string) --*
+
+                    If the bucket belongs to another AWS account, specify that account's ID.
+
+
+
+
+
+
+              - **error** *(dict) --*
+
+                Error information if the image block could not be processed or contains invalid data.
+
+
+
+
+                - **message** *(string) --*
+
+                  A human-readable error message describing what went wrong during content processing.
+
+
+
+
+
+
+            - **document** *(dict) --*
+
+              A document to include in the message.
+
+
+
+
+              - **format** *(string) --*
+
+                The format of a document, or its extension.
+
+
+
+
+              - **name** *(string) --* **[REQUIRED]**
+
+                A name for the document. The name can only contain the following characters:
+
+
+
+
+                * Alphanumeric characters
+
+                * Whitespace characters (no more than one in a row)
+
+                * Hyphens
+
+                * Parentheses
+
+                * Square brackets
+
+
+
+
+                .. note::
+
+
+
+                  This field is vulnerable to prompt injections, because the model might inadvertently interpret it as instructions. Therefore, we recommend that you specify a neutral name.
+
+
+
+
+
+
+              - **source** *(dict) --* **[REQUIRED]**
+
+                Contains the content of the document.
+
+                .. note::    This is a Tagged Union structure. Only one of the     following top level keys can be set: ``bytes``, ``s3Location``, ``text``, ``content``.
+
+
+                - **bytes** *(bytes) --*
+
+                  The raw bytes for the document. If you use an Amazon Web Services SDK, you don't need to encode the bytes in base64.
+
+
+
+
+                - **s3Location** *(dict) --*
+
+                  The location of a document object in an Amazon S3 bucket. To see which models support S3 uploads, see `Supported models and features for Converse <https://docs.aws.amazon.com/bedrock/latest/userguide/conversation-inference-supported-models-features.html>`__.
+
+
+
+
+                  - **uri** *(string) --* **[REQUIRED]**
+
+                    An object URI starting with ``s3://``.
+
+
+
+
+                  - **bucketOwner** *(string) --*
+
+                    If the bucket belongs to another AWS account, specify that account's ID.
+
+
+
+
+
+                - **text** *(string) --*
+
+                  The text content of the document source.
+
+
+
+
+                - **content** *(list) --*
+
+                  The structured content of the document source, which may include various content blocks such as text, images, or other document elements.
+
+
+
+
+                  - *(dict) --*
+
+                    Contains the actual content of a document that can be processed by the model and potentially cited in the response.
+
+                    .. note::    This is a Tagged Union structure. Only one of the     following top level keys can be set: ``text``.
+
+
+                    - **text** *(string) --*
+
+                      The text content of the document.
+
+
+
+
+
+
+
+              - **context** *(string) --*
+
+                Contextual information about how the document should be processed or interpreted by the model when generating citations.
+
+
+
+
+              - **citations** *(dict) --*
+
+                Configuration settings that control how citations should be generated for this specific document.
+
+
+
+
+                - **enabled** *(boolean) --* **[REQUIRED]**
+
+                  Specifies whether citations from the selected document should be used in the model's response. When set to true, the model can generate citations that reference the source documents used to inform the response.
+
+
+
+
+
+
+            - **video** *(dict) --*
+
+              Video to include in the message.
+
+
+
+
+              - **format** *(string) --* **[REQUIRED]**
+
+                The block's format.
+
+
+
+
+              - **source** *(dict) --* **[REQUIRED]**
+
+                The block's source.
+
+                .. note::    This is a Tagged Union structure. Only one of the     following top level keys can be set: ``bytes``, ``s3Location``.
+
+
+                - **bytes** *(bytes) --*
+
+                  Video content encoded in base64.
+
+
+
+
+                - **s3Location** *(dict) --*
+
+                  The location of a video object in an Amazon S3 bucket. To see which models support S3 uploads, see `Supported models and features for Converse <https://docs.aws.amazon.com/bedrock/latest/userguide/conversation-inference-supported-models-features.html>`__.
+
+
+
+
+                  - **uri** *(string) --* **[REQUIRED]**
+
+                    An object URI starting with ``s3://``.
+
+
+
+
+                  - **bucketOwner** *(string) --*
+
+                    If the bucket belongs to another AWS account, specify that account's ID.
+
+
+
+
+
+
+
+            - **audio** *(dict) --*
+
+              An audio content block containing audio data in the conversation.
+
+
+
+
+              - **format** *(string) --* **[REQUIRED]**
+
+                The format of the audio data, such as MP3, WAV, FLAC, or other supported audio formats.
+
+
+
+
+              - **source** *(dict) --* **[REQUIRED]**
+
+                The source of the audio data, which can be provided as raw bytes or an S3 location.
+
+                .. note::    This is a Tagged Union structure. Only one of the     following top level keys can be set: ``bytes``, ``s3Location``.
+
+
+                - **bytes** *(bytes) --*
+
+                  Audio data encoded in base64.
+
+
+
+
+                - **s3Location** *(dict) --*
+
+                  A reference to audio data stored in an Amazon S3 bucket. To see which models support S3 uploads, see `Supported models and features for Converse <https://docs.aws.amazon.com/bedrock/latest/userguide/conversation-inference-supported-models-features.html>`__.
+
+
+
+
+                  - **uri** *(string) --* **[REQUIRED]**
+
+                    An object URI starting with ``s3://``.
+
+
+
+
+                  - **bucketOwner** *(string) --*
+
+                    If the bucket belongs to another AWS account, specify that account's ID.
+
+
+
+
+
+
+              - **error** *(dict) --*
+
+                Error information if the audio block could not be processed or contains invalid data.
+
+
+
+
+                - **message** *(string) --*
+
+                  A human-readable error message describing what went wrong during content processing.
+
+
+
+
+
+
+            - **toolUse** *(dict) --*
+
+              Information about a tool use request from a model.
+
+
+
+
+              - **toolUseId** *(string) --* **[REQUIRED]**
+
+                The ID for the tool request.
+
+
+
+
+              - **name** *(string) --* **[REQUIRED]**
+
+                The name of the tool that the model wants to use.
+
+
+
+
+              - **input** (:ref:`document<document>`) -- **[REQUIRED]**
+
+                The input to pass to the tool.
+
+
+
+
+              - **type** *(string) --*
+
+                The type for the tool request.
+
+
+
+
+
+            - **toolResult** *(dict) --*
+
+              The result for a tool request that a model makes.
+
+
+
+
+              - **toolUseId** *(string) --* **[REQUIRED]**
+
+                The ID of the tool request that this is the result for.
+
+
+
+
+              - **content** *(list) --* **[REQUIRED]**
+
+                The content for tool result content block.
+
+
+
+
+                - *(dict) --*
+
+                  The tool result content block. For more information, see `Call a tool with the Converse API <https://docs.aws.amazon.com/bedrock/latest/userguide/tool-use.html>`__ in the Amazon Bedrock User Guide.
+
+                  .. note::    This is a Tagged Union structure. Only one of the     following top level keys can be set: ``json``, ``text``, ``image``, ``document``, ``video``, ``searchResult``.
+
+
+                  - **json** (:ref:`document<document>`) --
+
+                    A tool result that is JSON format data.
+
+
+
+
+                  - **text** *(string) --*
+
+                    A tool result that is text.
+
+
+
+
+                  - **image** *(dict) --*
+
+                    A tool result that is an image.
+
+
+
+                    .. note::
+
+
+
+                      This field is only supported by Amazon Nova and Anthropic Claude 3 and 4 models.
+
+
+
+
+
+
+                    - **format** *(string) --* **[REQUIRED]**
+
+                      The format of the image.
+
+
+
+
+                    - **source** *(dict) --* **[REQUIRED]**
+
+                      The source for the image.
+
+                      .. note::    This is a Tagged Union structure. Only one of the     following top level keys can be set: ``bytes``, ``s3Location``.
+
+
+                      - **bytes** *(bytes) --*
+
+                        The raw image bytes for the image. If you use an AWS SDK, you don't need to encode the image bytes in base64.
+
+
+
+
+                      - **s3Location** *(dict) --*
+
+                        The location of an image object in an Amazon S3 bucket. To see which models support S3 uploads, see `Supported models and features for Converse <https://docs.aws.amazon.com/bedrock/latest/userguide/conversation-inference-supported-models-features.html>`__.
+
+
+
+
+                        - **uri** *(string) --* **[REQUIRED]**
+
+                          An object URI starting with ``s3://``.
+
+
+
+
+                        - **bucketOwner** *(string) --*
+
+                          If the bucket belongs to another AWS account, specify that account's ID.
+
+
+
+
+
+
+                    - **error** *(dict) --*
+
+                      Error information if the image block could not be processed or contains invalid data.
+
+
+
+
+                      - **message** *(string) --*
+
+                        A human-readable error message describing what went wrong during content processing.
+
+
+
+
+
+
+                  - **document** *(dict) --*
+
+                    A tool result that is a document.
+
+
+
+
+                    - **format** *(string) --*
+
+                      The format of a document, or its extension.
+
+
+
+
+                    - **name** *(string) --* **[REQUIRED]**
+
+                      A name for the document. The name can only contain the following characters:
+
+
+
+
+                      * Alphanumeric characters
+
+                      * Whitespace characters (no more than one in a row)
+
+                      * Hyphens
+
+                      * Parentheses
+
+                      * Square brackets
+
+
+
+
+                      .. note::
+
+
+
+                        This field is vulnerable to prompt injections, because the model might inadvertently interpret it as instructions. Therefore, we recommend that you specify a neutral name.
+
+
+
+
+
+
+                    - **source** *(dict) --* **[REQUIRED]**
+
+                      Contains the content of the document.
+
+                      .. note::    This is a Tagged Union structure. Only one of the     following top level keys can be set: ``bytes``, ``s3Location``, ``text``, ``content``.
+
+
+                      - **bytes** *(bytes) --*
+
+                        The raw bytes for the document. If you use an Amazon Web Services SDK, you don't need to encode the bytes in base64.
+
+
+
+
+                      - **s3Location** *(dict) --*
+
+                        The location of a document object in an Amazon S3 bucket. To see which models support S3 uploads, see `Supported models and features for Converse <https://docs.aws.amazon.com/bedrock/latest/userguide/conversation-inference-supported-models-features.html>`__.
+
+
+
+
+                        - **uri** *(string) --* **[REQUIRED]**
+
+                          An object URI starting with ``s3://``.
+
+
+
+
+                        - **bucketOwner** *(string) --*
+
+                          If the bucket belongs to another AWS account, specify that account's ID.
+
+
+
+
+
+                      - **text** *(string) --*
+
+                        The text content of the document source.
+
+
+
+
+                      - **content** *(list) --*
+
+                        The structured content of the document source, which may include various content blocks such as text, images, or other document elements.
+
+
+
+
+                        - *(dict) --*
+
+                          Contains the actual content of a document that can be processed by the model and potentially cited in the response.
+
+                          .. note::    This is a Tagged Union structure. Only one of the     following top level keys can be set: ``text``.
+
+
+                          - **text** *(string) --*
+
+                            The text content of the document.
+
+
+
+
+
+
+
+                    - **context** *(string) --*
+
+                      Contextual information about how the document should be processed or interpreted by the model when generating citations.
+
+
+
+
+                    - **citations** *(dict) --*
+
+                      Configuration settings that control how citations should be generated for this specific document.
+
+
+
+
+                      - **enabled** *(boolean) --* **[REQUIRED]**
+
+                        Specifies whether citations from the selected document should be used in the model's response. When set to true, the model can generate citations that reference the source documents used to inform the response.
+
+
+
+
+
+
+                  - **video** *(dict) --*
+
+                    A tool result that is video.
+
+
+
+
+                    - **format** *(string) --* **[REQUIRED]**
+
+                      The block's format.
+
+
+
+
+                    - **source** *(dict) --* **[REQUIRED]**
+
+                      The block's source.
+
+                      .. note::    This is a Tagged Union structure. Only one of the     following top level keys can be set: ``bytes``, ``s3Location``.
+
+
+                      - **bytes** *(bytes) --*
+
+                        Video content encoded in base64.
+
+
+
+
+                      - **s3Location** *(dict) --*
+
+                        The location of a video object in an Amazon S3 bucket. To see which models support S3 uploads, see `Supported models and features for Converse <https://docs.aws.amazon.com/bedrock/latest/userguide/conversation-inference-supported-models-features.html>`__.
+
+
+
+
+                        - **uri** *(string) --* **[REQUIRED]**
+
+                          An object URI starting with ``s3://``.
+
+
+
+
+                        - **bucketOwner** *(string) --*
+
+                          If the bucket belongs to another AWS account, specify that account's ID.
+
+
+
+
+
+
+
+                  - **searchResult** *(dict) --*
+
+                    A tool result that is a search result.
+
+
+
+
+                    - **source** *(string) --* **[REQUIRED]**
+
+                      The source URL or identifier for the content.
+
+
+
+
+                    - **title** *(string) --* **[REQUIRED]**
+
+                      A descriptive title for the search result.
+
+
+
+
+                    - **content** *(list) --* **[REQUIRED]**
+
+                      An array of search result content block.
+
+
+
+
+                      - *(dict) --*
+
+                        A block within a search result that contains the content.
+
+
+
+
+                        - **text** *(string) --* **[REQUIRED]**
+
+                          The actual text content
+
+
+
+
+
+
+                    - **citations** *(dict) --*
+
+                      Configuration setting for citations
+
+
+
+
+                      - **enabled** *(boolean) --* **[REQUIRED]**
+
+                        Specifies whether citations from the selected document should be used in the model's response. When set to true, the model can generate citations that reference the source documents used to inform the response.
+
+
+
+
+
+
+
+
+              - **status** *(string) --*
+
+                The status for the tool result content block.
+
+
+
+                .. note::
+
+
+
+                  This field is only supported by Amazon Nova and Anthropic Claude 3 and 4 models.
+
+
+
+
+
+
+              - **type** *(string) --*
+
+                The type for the tool result content block.
+
+
+
+
+
+            - **guardContent** *(dict) --*
+
+              Contains the content to assess with the guardrail. If you don't specify ``guardContent`` in a call to the Converse API, the guardrail (if passed in the Converse API) assesses the entire message.
+
+
+
+              For more information, see *Use a guardrail with the Converse API* in the *Amazon Bedrock User Guide*.
+
+              .. note::    This is a Tagged Union structure. Only one of the     following top level keys can be set: ``text``, ``image``.
+
+
+              - **text** *(dict) --*
+
+                The text to guard.
+
+
+
+
+                - **text** *(string) --* **[REQUIRED]**
+
+                  The text that you want to guard.
+
+
+
+
+                - **qualifiers** *(list) --*
+
+                  The qualifier details for the guardrails contextual grounding filter.
+
+
+
+
+                  - *(string) --*
+
+
+
+
+              - **image** *(dict) --*
+
+                Image within converse content block to be evaluated by the guardrail.
+
+
+
+
+                - **format** *(string) --* **[REQUIRED]**
+
+                  The format details for the image type of the guardrail converse image block.
+
+
+
+
+                - **source** *(dict) --* **[REQUIRED]**
+
+                  The image source (image bytes) of the guardrail converse image block.
+
+                  .. note::    This is a Tagged Union structure. Only one of the     following top level keys can be set: ``bytes``.
+
+
+                  - **bytes** *(bytes) --*
+
+                    The raw image bytes for the image.
+
+
+
+
+
+
+
+            - **cachePoint** *(dict) --*
+
+              CachePoint to include in the message.
+
+
+
+
+              - **type** *(string) --* **[REQUIRED]**
+
+                Specifies the type of cache point within the CachePointBlock.
+
+
+
+
+              - **ttl** *(string) --*
+
+                Optional TTL duration for cache entries. When specified, enables extended TTL caching with the specified duration. When omitted, uses ``type`` value for caching behavior.
+
+
+
+
+
+            - **reasoningContent** *(dict) --*
+
+              Contains content regarding the reasoning that is carried out by the model. Reasoning refers to a Chain of Thought (CoT) that the model generates to enhance the accuracy of its final response.
+
+              .. note::    This is a Tagged Union structure. Only one of the     following top level keys can be set: ``reasoningText``, ``redactedContent``.
+
+
+              - **reasoningText** *(dict) --*
+
+                The reasoning that the model used to return the output.
+
+
+
+
+                - **text** *(string) --* **[REQUIRED]**
+
+                  The reasoning that the model used to return the output.
+
+
+
+
+                - **signature** *(string) --*
+
+                  A token that verifies that the reasoning text was generated by the model. If you pass a reasoning block back to the API in a multi-turn conversation, include the text and its signature unmodified.
+
+
+
+
+
+              - **redactedContent** *(bytes) --*
+
+                The content in the reasoning that was encrypted by the model provider for safety reasons. The encryption doesn't affect the quality of responses.
+
+
+
+
+
+            - **citationsContent** *(dict) --*
+
+              A content block that contains both generated text and associated citation information, providing traceability between the response and source documents.
+
+
+
+
+              - **content** *(list) --*
+
+                The generated content that is supported by the associated citations.
+
+
+
+
+                - *(dict) --*
+
+                  Contains the generated text content that corresponds to or is supported by a citation from a source document.
+
+                  .. note::    This is a Tagged Union structure. Only one of the     following top level keys can be set: ``text``.
+
+
+                  - **text** *(string) --*
+
+                    The text content that was generated by the model and is supported by the associated citation.
+
+
+
+
+
+
+              - **citations** *(list) --*
+
+                An array of citations that reference the source documents used to generate the associated content.
+
+
+
+
+                - *(dict) --*
+
+                  Contains information about a citation that references a specific source document. Citations provide traceability between the model's generated response and the source documents that informed that response.
+
+
+
+
+                  - **title** *(string) --*
+
+                    The title or identifier of the source document being cited.
+
+
+
+
+                  - **source** *(string) --*
+
+                    The source from the original search result that provided the cited content.
+
+
+
+
+                  - **sourceContent** *(list) --*
+
+                    The specific content from the source document that was referenced or cited in the generated response.
+
+
+
+
+                    - *(dict) --*
+
+                      Contains the actual text content from a source document that is being cited or referenced in the model's response.
+
+                      .. note::    This is a Tagged Union structure. Only one of the     following top level keys can be set: ``text``.
+
+
+                      - **text** *(string) --*
+
+                        The text content from the source document that is being cited.
+
+
+
+
+
+
+                  - **location** *(dict) --*
+
+                    The precise location within the source document where the cited content can be found, including character positions, page numbers, or chunk identifiers.
+
+                    .. note::    This is a Tagged Union structure. Only one of the     following top level keys can be set: ``web``, ``documentChar``, ``documentPage``, ``documentChunk``, ``searchResultLocation``.
+
+
+                    - **web** *(dict) --*
+
+                      The web URL that was cited for this reference.
+
+
+
+
+                      - **url** *(string) --*
+
+                        The URL that was cited when performing a web search.
+
+
+
+
+                      - **domain** *(string) --*
+
+                        The domain that was cited when performing a web search.
+
+
+
+
+
+                    - **documentChar** *(dict) --*
+
+                      The character-level location within the document where the cited content is found.
+
+
+
+
+                      - **documentIndex** *(integer) --*
+
+                        The index of the document within the array of documents provided in the request.
+
+
+
+
+                      - **start** *(integer) --*
+
+                        The starting character position of the cited content within the document.
+
+
+
+
+                      - **end** *(integer) --*
+
+                        The ending character position of the cited content within the document.
+
+
+
+
+
+                    - **documentPage** *(dict) --*
+
+                      The page-level location within the document where the cited content is found.
+
+
+
+
+                      - **documentIndex** *(integer) --*
+
+                        The index of the document within the array of documents provided in the request.
+
+
+
+
+                      - **start** *(integer) --*
+
+                        The starting page number of the cited content within the document.
+
+
+
+
+                      - **end** *(integer) --*
+
+                        The ending page number of the cited content within the document.
+
+
+
+
+
+                    - **documentChunk** *(dict) --*
+
+                      The chunk-level location within the document where the cited content is found, typically used for documents that have been segmented into logical chunks.
+
+
+
+
+                      - **documentIndex** *(integer) --*
+
+                        The index of the document within the array of documents provided in the request.
+
+
+
+
+                      - **start** *(integer) --*
+
+                        The starting chunk identifier or index of the cited content within the document.
+
+
+
+
+                      - **end** *(integer) --*
+
+                        The ending chunk identifier or index of the cited content within the document.
+
+
+
+
+
+                    - **searchResultLocation** *(dict) --*
+
+                      The search result location where the cited content is found, including the search result index and block positions within the content array.
+
+
+
+
+                      - **searchResultIndex** *(integer) --*
+
+                        The index of the search result content block where the cited content is found.
+
+
+
+
+                      - **start** *(integer) --*
+
+                        The starting position in the content array where the cited content begins.
+
+
+
+
+                      - **end** *(integer) --*
+
+                        The ending position in the content array where the cited content ends.
+
+
+
+
+
+
+
+
+
+            - **searchResult** *(dict) --*
+
+              Search result to include in the message.
+
+
+
+
+              - **source** *(string) --* **[REQUIRED]**
+
+                The source URL or identifier for the content.
+
+
+
+
+              - **title** *(string) --* **[REQUIRED]**
+
+                A descriptive title for the search result.
+
+
+
+
+              - **content** *(list) --* **[REQUIRED]**
+
+                An array of search result content block.
+
+
+
+
+                - *(dict) --*
+
+                  A block within a search result that contains the content.
+
+
+
+
+                  - **text** *(string) --* **[REQUIRED]**
+
+                    The actual text content
+
+
+
+
+
+
+              - **citations** *(dict) --*
+
+                Configuration setting for citations
+
+
+
+
+                - **enabled** *(boolean) --* **[REQUIRED]**
+
+                  Specifies whether citations from the selected document should be used in the model's response. When set to true, the model can generate citations that reference the source documents used to inform the response.
+
+
+
+
+
+
+
+
+
+
+    :type system: list
+    :param system:
+
+      A prompt that provides instructions or context to the model about the task it should perform, or the persona it should adopt during the conversation.
+
+
+
+
+      - *(dict) --*
+
+        Contains configurations for instructions to provide the model for how to handle input. To learn more, see `Using the Converse API <https://docs.aws.amazon.com/bedrock/latest/userguide/conversation-inference-call.html>`__.
+
+        .. note::    This is a Tagged Union structure. Only one of the     following top level keys can be set: ``text``, ``guardContent``, ``cachePoint``.
+
+
+        - **text** *(string) --*
+
+          A system prompt for the model.
+
+
+
+
+        - **guardContent** *(dict) --*
+
+          A content block to assess with the guardrail. Use with the `Converse <https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_Converse.html>`__ or `ConverseStream <https://docs.aws.amazon.com/bedrock/latest/APIReference/API_runtime_ConverseStream.html>`__ API operations.
+
+
+
+          For more information, see *Use a guardrail with the Converse API* in the *Amazon Bedrock User Guide*.
+
+          .. note::    This is a Tagged Union structure. Only one of the     following top level keys can be set: ``text``, ``image``.
+
+
+          - **text** *(dict) --*
+
+            The text to guard.
+
+
+
+
+            - **text** *(string) --* **[REQUIRED]**
+
+              The text that you want to guard.
+
+
+
+
+            - **qualifiers** *(list) --*
+
+              The qualifier details for the guardrails contextual grounding filter.
+
+
+
+
+              - *(string) --*
+
+
+
+
+          - **image** *(dict) --*
+
+            Image within converse content block to be evaluated by the guardrail.
+
+
+
+
+            - **format** *(string) --* **[REQUIRED]**
+
+              The format details for the image type of the guardrail converse image block.
+
+
+
+
+            - **source** *(dict) --* **[REQUIRED]**
+
+              The image source (image bytes) of the guardrail converse image block.
+
+              .. note::    This is a Tagged Union structure. Only one of the     following top level keys can be set: ``bytes``.
+
+
+              - **bytes** *(bytes) --*
+
+                The raw image bytes for the image.
+
+
+
+
+
+
+
+        - **cachePoint** *(dict) --*
+
+          CachePoint to include in the system prompt.
+
+
+
+
+          - **type** *(string) --* **[REQUIRED]**
+
+            Specifies the type of cache point within the CachePointBlock.
+
+
+
+
+          - **ttl** *(string) --*
+
+            Optional TTL duration for cache entries. When specified, enables extended TTL caching with the specified duration. When omitted, uses ``type`` value for caching behavior.
+
+
+
+
+
+
+
+    :type inferenceConfig: dict
+    :param inferenceConfig:
+
+      Inference parameters to pass to the model. ``Converse`` and ``ConverseStream`` support a base set of inference parameters. If you need to pass additional parameters that the model supports, use the ``additionalModelRequestFields`` request field.
+
+
+
+
+      - **maxTokens** *(integer) --*
+
+        The maximum number of tokens to allow in the generated response. The default value is the maximum allowed value for the model that you are using. For more information, see `Inference parameters for foundation models <https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters.html>`__.
+
+
+
+
+      - **temperature** *(float) --*
+
+        The likelihood of the model selecting higher-probability options while generating a response. A lower value makes the model more likely to choose higher-probability options, while a higher value makes the model more likely to choose lower-probability options.
+
+
+
+        The default value is the default value for the model that you are using. For more information, see `Inference parameters for foundation models <https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters.html>`__.
+
+
+
+
+      - **topP** *(float) --*
+
+        The percentage of most-likely candidates that the model considers for the next token. For example, if you choose a value of 0.8 for ``topP``, the model selects from the top 80% of the probability distribution of tokens that could be next in the sequence.
+
+
+
+        The default value is the default value for the model that you are using. For more information, see `Inference parameters for foundation models <https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters.html>`__.
+
+
+
+
+      - **stopSequences** *(list) --*
+
+        A list of stop sequences. A stop sequence is a sequence of characters that causes the model to stop generating the response.
+
+
+
+
+        - *(string) --*
+
+
+
+
+    :type toolConfig: dict
+    :param toolConfig:
+
+      Configuration information for the tools that the model can use when generating a response.
+
+
+
+      For information about models that support tool use, see `Supported models and model features <https://docs.aws.amazon.com/bedrock/latest/userguide/conversation-inference.html#conversation-inference-supported-models-features>`__.
+
+
+
+
+      - **tools** *(list) --* **[REQUIRED]**
+
+        An array of tools that you want to pass to a model.
+
+
+
+
+        - *(dict) --*
+
+          Information about a tool that you can use with the Converse API. For more information, see `Call a tool with the Converse API <https://docs.aws.amazon.com/bedrock/latest/userguide/tool-use.html>`__ in the Amazon Bedrock User Guide.
+
+          .. note::    This is a Tagged Union structure. Only one of the     following top level keys can be set: ``toolSpec``, ``systemTool``, ``cachePoint``.
+
+
+          - **toolSpec** *(dict) --*
+
+            The specfication for the tool.
+
+
+
+
+            - **name** *(string) --* **[REQUIRED]**
+
+              The name for the tool.
+
+
+
+
+            - **description** *(string) --*
+
+              The description for the tool.
+
+
+
+
+            - **inputSchema** *(dict) --* **[REQUIRED]**
+
+              The input schema for the tool in JSON format.
+
+              .. note::    This is a Tagged Union structure. Only one of the     following top level keys can be set: ``json``.
+
+
+              - **json** (:ref:`document<document>`) --
+
+                The JSON schema for the tool. For more information, see `JSON Schema Reference <https://json-schema.org/understanding-json-schema/reference>`__.
+
+
+
+
+
+            - **strict** *(boolean) --*
+
+              Flag to enable structured output enforcement on a tool usage response.
+
+
+
+
+
+          - **systemTool** *(dict) --*
+
+            Specifies the system-defined tool that you want use.
+
+
+
+
+            - **name** *(string) --* **[REQUIRED]**
+
+              The name of the system-defined tool that you want to call.
+
+
+
+
+
+          - **cachePoint** *(dict) --*
+
+            CachePoint to include in the tool configuration.
+
+
+
+
+            - **type** *(string) --* **[REQUIRED]**
+
+              Specifies the type of cache point within the CachePointBlock.
+
+
+
+
+            - **ttl** *(string) --*
+
+              Optional TTL duration for cache entries. When specified, enables extended TTL caching with the specified duration. When omitted, uses ``type`` value for caching behavior.
+
+
+
+
+
+
+
+      - **toolChoice** *(dict) --*
+
+        If supported by model, forces the model to request a tool.
+
+        .. note::    This is a Tagged Union structure. Only one of the     following top level keys can be set: ``auto``, ``any``, ``tool``.
+
+
+        - **auto** *(dict) --*
+
+          (Default). The Model automatically decides if a tool should be called or whether to generate text instead.
+
+
+
+
+
+        - **any** *(dict) --*
+
+          The model must request at least one tool (no text is generated).
+
+
+
+
+
+        - **tool** *(dict) --*
+
+          The Model must request the specified tool. Only supported by Anthropic Claude 3 and Amazon Nova models.
+
+
+
+
+          - **name** *(string) --* **[REQUIRED]**
+
+            The name of the tool that the model must request.
+
+
+
+
+
+
+
+    :type guardrailConfig: dict
+    :param guardrailConfig:
+
+      Configuration information for a guardrail that you want to use in the request. If you include ``guardContent`` blocks in the ``content`` field in the ``messages`` field, the guardrail operates only on those messages. If you include no ``guardContent`` blocks, the guardrail operates on all messages in the request body and in any included prompt resource.
+
+
+
+
+      - **guardrailIdentifier** *(string) --*
+
+        The identifier for the guardrail.
+
+
+
+
+      - **guardrailVersion** *(string) --*
+
+        The version of the guardrail.
+
+
+
+
+      - **trace** *(string) --*
+
+        The trace behavior for the guardrail.
+
+
+
+
+
+    :type additionalModelRequestFields: :ref:`document<document>`
+    :param additionalModelRequestFields:
+
+      Additional inference parameters that the model supports, beyond the base set of inference parameters that ``Converse`` and ``ConverseStream`` support in the ``inferenceConfig`` field. For more information, see `Model parameters <https://docs.aws.amazon.com/bedrock/latest/userguide/model-parameters.html>`__.
+
+
+
+
+    :type promptVariables: dict
+    :param promptVariables:
+
+      Contains a map of variables in a prompt from Prompt management to objects containing the values to fill in for them when running model invocation. This field is ignored if you don't specify a prompt resource in the ``modelId`` field.
+
+
+
+
+      - *(string) --*
+
+
+        - *(dict) --*
+
+          Contains a map of variables in a prompt from Prompt management to an object containing the values to fill in for them when running model invocation. For more information, see `How Prompt management works <https://docs.aws.amazon.com/bedrock/latest/userguide/prompt-management-how.html>`__.
+
+          .. note::    This is a Tagged Union structure. Only one of the     following top level keys can be set: ``text``.
+
+
+          - **text** *(string) --*
+
+            The text value that the variable maps to.
+
+
+
+
+
+
+
+    :type additionalModelResponseFieldPaths: list
+    :param additionalModelResponseFieldPaths:
+
+      Additional model parameters field paths to return in the response. ``Converse`` and ``ConverseStream`` return the requested fields as a JSON Pointer object in the ``additionalModelResponseFields`` field. The following is example JSON for ``additionalModelResponseFieldPaths``.
+
+
+
+      ``[ "/stop_sequence" ]``
+
+
+
+      For information about the JSON Pointer syntax, see the `Internet Engineering Task Force (IETF) <https://datatracker.ietf.org/doc/html/rfc6901>`__ documentation.
+
+
+
+      ``Converse`` and ``ConverseStream`` reject an empty JSON Pointer or incorrectly structured JSON Pointer with a ``400`` error code. if the JSON Pointer is valid, but the requested field is not in the model response, it is ignored by ``Converse``.
+
+
+
+
+      - *(string) --*
+
+
+
+    :type requestMetadata: dict
+    :param requestMetadata:
+
+      Key-value pairs that you can use to filter invocation logs.
+
+
+
+
+      - *(string) --*
+
+
+        - *(string) --*
+
+
+
+
+    :type performanceConfig: dict
+    :param performanceConfig:
+
+      Model performance settings for the request.
+
+
+
+
+      - **latency** *(string) --*
+
+        To use a latency-optimized version of the model, set to ``optimized``.
+
+
+
+
+
+    :type serviceTier: dict
+    :param serviceTier:
+
+      Specifies the processing tier configuration used for serving the request.
+
+
+
+
+      - **type** *(string) --* **[REQUIRED]**
+
+        Specifies the processing tier type used for serving the request.
+
+
+
+
+
+    :type outputConfig: dict
+    :param outputConfig:
+
+      Output configuration for a model response.
+
+
+
+
+      - **textFormat** *(dict) --*
+
+        Structured output parameters to control the model's text response.
+
+
+
+
+        - **type** *(string) --* **[REQUIRED]**
+
+          The type of structured output format.
+
+
+
+
+        - **structure** *(dict) --* **[REQUIRED]**
+
+          The structure that the model's output must adhere to.
+
+          .. note::    This is a Tagged Union structure. Only one of the     following top level keys can be set: ``jsonSchema``.
+
+
+          - **jsonSchema** *(dict) --*
+
+            A JSON schema structure that the model's output must adhere to.
+
+
+
+
+            - **schema** *(string) --* **[REQUIRED]**
+
+              The JSON schema to constrain the model's output. For more information, see `JSON Schema Reference <https://json-schema.org/understanding-json-schema/reference>`__.
+
+
+
+
+            - **name** *(string) --*
+
+              The name of the JSON schema.
+
+
+
+
+            - **description** *(string) --*
+
+              A description of the JSON schema.
+
+
+
+
+
+
+
+
+
+    :rtype: dict
+    :returns:
+
+      **Response Syntax**
+
+
+      ::
+
+        {
+            'output': {
+                'message': {
+                    'role': 'user'|'assistant',
+                    'content': [
+                        {
+                            'text': 'string',
+                            'image': {
+                                'format': 'png'|'jpeg'|'gif'|'webp',
+                                'source': {
+                                    'bytes': b'bytes',
+                                    's3Location': {
+                                        'uri': 'string',
+                                        'bucketOwner': 'string'
+                                    }
+                                },
+                                'error': {
+                                    'message': 'string'
+                                }
+                            },
+                            'document': {
+                                'format': 'pdf'|'csv'|'doc'|'docx'|'xls'|'xlsx'|'html'|'txt'|'md',
+                                'name': 'string',
+                                'source': {
+                                    'bytes': b'bytes',
+                                    's3Location': {
+                                        'uri': 'string',
+                                        'bucketOwner': 'string'
+                                    },
+                                    'text': 'string',
+                                    'content': [
+                                        {
+                                            'text': 'string'
+                                        },
+                                    ]
+                                },
+                                'context': 'string',
+                                'citations': {
+                                    'enabled': True|False
+                                }
+                            },
+                            'video': {
+                                'format': 'mkv'|'mov'|'mp4'|'webm'|'flv'|'mpeg'|'mpg'|'wmv'|'three_gp',
+                                'source': {
+                                    'bytes': b'bytes',
+                                    's3Location': {
+                                        'uri': 'string',
+                                        'bucketOwner': 'string'
+                                    }
+                                }
+                            },
+                            'audio': {
+                                'format': 'mp3'|'opus'|'wav'|'aac'|'flac'|'mp4'|'ogg'|'mkv'|'mka'|'x-aac'|'m4a'|'mpeg'|'mpga'|'pcm'|'webm',
+                                'source': {
+                                    'bytes': b'bytes',
+                                    's3Location': {
+                                        'uri': 'string',
+                                        'bucketOwner': 'string'
+                                    }
+                                },
+                                'error': {
+                                    'message': 'string'
+                                }
+                            },
+                            'toolUse': {
+                                'toolUseId': 'string',
+                                'name': 'string',
+                                'input': {...}|[...]|123|123.4|'string'|True|None,
+                                'type': 'server_tool_use'
+                            },
+                            'toolResult': {
+                                'toolUseId': 'string',
+                                'content': [
+                                    {
+                                        'json': {...}|[...]|123|123.4|'string'|True|None,
+                                        'text': 'string',
+                                        'image': {
+                                            'format': 'png'|'jpeg'|'gif'|'webp',
+                                            'source': {
+                                                'bytes': b'bytes',
+                                                's3Location': {
+                                                    'uri': 'string',
+                                                    'bucketOwner': 'string'
+                                                }
+                                            },
+                                            'error': {
+                                                'message': 'string'
+                                            }
+                                        },
+                                        'document': {
+                                            'format': 'pdf'|'csv'|'doc'|'docx'|'xls'|'xlsx'|'html'|'txt'|'md',
+                                            'name': 'string',
+                                            'source': {
+                                                'bytes': b'bytes',
+                                                's3Location': {
+                                                    'uri': 'string',
+                                                    'bucketOwner': 'string'
+                                                },
+                                                'text': 'string',
+                                                'content': [
+                                                    {
+                                                        'text': 'string'
+                                                    },
+                                                ]
+                                            },
+                                            'context': 'string',
+                                            'citations': {
+                                                'enabled': True|False
+                                            }
+                                        },
+                                        'video': {
+                                            'format': 'mkv'|'mov'|'mp4'|'webm'|'flv'|'mpeg'|'mpg'|'wmv'|'three_gp',
+                                            'source': {
+                                                'bytes': b'bytes',
+                                                's3Location': {
+                                                    'uri': 'string',
+                                                    'bucketOwner': 'string'
+                                                }
+                                            }
+                                        },
+                                        'searchResult': {
+                                            'source': 'string',
+                                            'title': 'string',
+                                            'content': [
+                                                {
+                                                    'text': 'string'
+                                                },
+                                            ],
+                                            'citations': {
+                                                'enabled': True|False
+                                            }
+                                        }
+                                    },
+                                ],
+                                'status': 'success'|'error',
+                                'type': 'string'
+                            },
+                            'guardContent': {
+                                'text': {
+                                    'text': 'string',
+                                    'qualifiers': [
+                                        'grounding_source'|'query'|'guard_content',
+                                    ]
+                                },
+                                'image': {
+                                    'format': 'png'|'jpeg',
+                                    'source': {
+                                        'bytes': b'bytes'
+                                    }
+                                }
+                            },
+                            'cachePoint': {
+                                'type': 'default',
+                                'ttl': '5m'|'1h'
+                            },
+                            'reasoningContent': {
+                                'reasoningText': {
+                                    'text': 'string',
+                                    'signature': 'string'
+                                },
+                                'redactedContent': b'bytes'
+                            },
+                            'citationsContent': {
+                                'content': [
+                                    {
+                                        'text': 'string'
+                                    },
+                                ],
+                                'citations': [
+                                    {
+                                        'title': 'string',
+                                        'source': 'string',
+                                        'sourceContent': [
+                                            {
+                                                'text': 'string'
+                                            },
+                                        ],
+                                        'location': {
+                                            'web': {
+                                                'url': 'string',
+                                                'domain': 'string'
+                                            },
+                                            'documentChar': {
+                                                'documentIndex': 123,
+                                                'start': 123,
+                                                'end': 123
+                                            },
+                                            'documentPage': {
+                                                'documentIndex': 123,
+                                                'start': 123,
+                                                'end': 123
+                                            },
+                                            'documentChunk': {
+                                                'documentIndex': 123,
+                                                'start': 123,
+                                                'end': 123
+                                            },
+                                            'searchResultLocation': {
+                                                'searchResultIndex': 123,
+                                                'start': 123,
+                                                'end': 123
+                                            }
+                                        }
+                                    },
+                                ]
+                            },
+                            'searchResult': {
+                                'source': 'string',
+                                'title': 'string',
+                                'content': [
+                                    {
+                                        'text': 'string'
+                                    },
+                                ],
+                                'citations': {
+                                    'enabled': True|False
+                                }
+                            }
+                        },
+                    ]
+                }
+            },
+            'stopReason': 'end_turn'|'tool_use'|'max_tokens'|'stop_sequence'|'guardrail_intervened'|'content_filtered'|'malformed_model_output'|'malformed_tool_use'|'model_context_window_exceeded',
+            'usage': {
+                'inputTokens': 123,
+                'outputTokens': 123,
+                'totalTokens': 123,
+                'cacheReadInputTokens': 123,
+                'cacheWriteInputTokens': 123,
+                'cacheDetails': [
+                    {
+                        'ttl': '5m'|'1h',
+                        'inputTokens': 123
+                    },
+                ]
+            },
+            'metrics': {
+                'latencyMs': 123
+            },
+            'additionalModelResponseFields': {...}|[...]|123|123.4|'string'|True|None,
+            'trace': {
+                'guardrail': {
+                    'modelOutput': [
+                        'string',
+                    ],
+                    'inputAssessment': {
+                        'string': {
+                            'topicPolicy': {
+                                'topics': [
+                                    {
+                                        'name': 'string',
+                                        'type': 'DENY',
+                                        'action': 'BLOCKED'|'NONE',
+                                        'detected': True|False
+                                    },
+                                ]
+                            },
+                            'contentPolicy': {
+                                'filters': [
+                                    {
+                                        'type': 'INSULTS'|'HATE'|'SEXUAL'|'VIOLENCE'|'MISCONDUCT'|'PROMPT_ATTACK',
+                                        'confidence': 'NONE'|'LOW'|'MEDIUM'|'HIGH',
+                                        'filterStrength': 'NONE'|'LOW'|'MEDIUM'|'HIGH',
+                                        'action': 'BLOCKED'|'NONE',
+                                        'detected': True|False
+                                    },
+                                ]
+                            },
+                            'wordPolicy': {
+                                'customWords': [
+                                    {
+                                        'match': 'string',
+                                        'action': 'BLOCKED'|'NONE',
+                                        'detected': True|False
+                                    },
+                                ],
+                                'managedWordLists': [
+                                    {
+                                        'match': 'string',
+                                        'type': 'PROFANITY',
+                                        'action': 'BLOCKED'|'NONE',
+                                        'detected': True|False
+                                    },
+                                ]
+                            },
+                            'sensitiveInformationPolicy': {
+                                'piiEntities': [
+                                    {
+                                        'match': 'string',
+                                        'type': 'ADDRESS'|'AGE'|'AWS_ACCESS_KEY'|'AWS_SECRET_KEY'|'CA_HEALTH_NUMBER'|'CA_SOCIAL_INSURANCE_NUMBER'|'CREDIT_DEBIT_CARD_CVV'|'CREDIT_DEBIT_CARD_EXPIRY'|'CREDIT_DEBIT_CARD_NUMBER'|'DRIVER_ID'|'EMAIL'|'INTERNATIONAL_BANK_ACCOUNT_NUMBER'|'IP_ADDRESS'|'LICENSE_PLATE'|'MAC_ADDRESS'|'NAME'|'PASSWORD'|'PHONE'|'PIN'|'SWIFT_CODE'|'UK_NATIONAL_HEALTH_SERVICE_NUMBER'|'UK_NATIONAL_INSURANCE_NUMBER'|'UK_UNIQUE_TAXPAYER_REFERENCE_NUMBER'|'URL'|'USERNAME'|'US_BANK_ACCOUNT_NUMBER'|'US_BANK_ROUTING_NUMBER'|'US_INDIVIDUAL_TAX_IDENTIFICATION_NUMBER'|'US_PASSPORT_NUMBER'|'US_SOCIAL_SECURITY_NUMBER'|'VEHICLE_IDENTIFICATION_NUMBER',
+                                        'action': 'ANONYMIZED'|'BLOCKED'|'NONE',
+                                        'detected': True|False
+                                    },
+                                ],
+                                'regexes': [
+                                    {
+                                        'name': 'string',
+                                        'match': 'string',
+                                        'regex': 'string',
+                                        'action': 'ANONYMIZED'|'BLOCKED'|'NONE',
+                                        'detected': True|False
+                                    },
+                                ]
+                            },
+                            'contextualGroundingPolicy': {
+                                'filters': [
+                                    {
+                                        'type': 'GROUNDING'|'RELEVANCE',
+                                        'threshold': 123.0,
+                                        'score': 123.0,
+                                        'action': 'BLOCKED'|'NONE',
+                                        'detected': True|False
+                                    },
+                                ]
+                            },
+                            'automatedReasoningPolicy': {
+                                'findings': [
+                                    {
+                                        'valid': {
+                                            'translation': {
+                                                'premises': [
+                                                    {
+                                                        'logic': 'string',
+                                                        'naturalLanguage': 'string'
+                                                    },
+                                                ],
+                                                'claims': [
+                                                    {
+                                                        'logic': 'string',
+                                                        'naturalLanguage': 'string'
+                                                    },
+                                                ],
+                                                'untranslatedPremises': [
+                                                    {
+                                                        'text': 'string'
+                                                    },
+                                                ],
+                                                'untranslatedClaims': [
+                                                    {
+                                                        'text': 'string'
+                                                    },
+                                                ],
+                                                'confidence': 123.0
+                                            },
+                                            'claimsTrueScenario': {
+                                                'statements': [
+                                                    {
+                                                        'logic': 'string',
+                                                        'naturalLanguage': 'string'
+                                                    },
+                                                ]
+                                            },
+                                            'supportingRules': [
+                                                {
+                                                    'identifier': 'string',
+                                                    'policyVersionArn': 'string'
+                                                },
+                                            ],
+                                            'logicWarning': {
+                                                'type': 'ALWAYS_FALSE'|'ALWAYS_TRUE',
+                                                'premises': [
+                                                    {
+                                                        'logic': 'string',
+                                                        'naturalLanguage': 'string'
+                                                    },
+                                                ],
+                                                'claims': [
+                                                    {
+                                                        'logic': 'string',
+                                                        'naturalLanguage': 'string'
+                                                    },
+                                                ]
+                                            }
+                                        },
+                                        'invalid': {
+                                            'translation': {
+                                                'premises': [
+                                                    {
+                                                        'logic': 'string',
+                                                        'naturalLanguage': 'string'
+                                                    },
+                                                ],
+                                                'claims': [
+                                                    {
+                                                        'logic': 'string',
+                                                        'naturalLanguage': 'string'
+                                                    },
+                                                ],
+                                                'untranslatedPremises': [
+                                                    {
+                                                        'text': 'string'
+                                                    },
+                                                ],
+                                                'untranslatedClaims': [
+                                                    {
+                                                        'text': 'string'
+                                                    },
+                                                ],
+                                                'confidence': 123.0
+                                            },
+                                            'contradictingRules': [
+                                                {
+                                                    'identifier': 'string',
+                                                    'policyVersionArn': 'string'
+                                                },
+                                            ],
+                                            'logicWarning': {
+                                                'type': 'ALWAYS_FALSE'|'ALWAYS_TRUE',
+                                                'premises': [
+                                                    {
+                                                        'logic': 'string',
+                                                        'naturalLanguage': 'string'
+                                                    },
+                                                ],
+                                                'claims': [
+                                                    {
+                                                        'logic': 'string',
+                                                        'naturalLanguage': 'string'
+                                                    },
+                                                ]
+                                            }
+                                        },
+                                        'satisfiable': {
+                                            'translation': {
+                                                'premises': [
+                                                    {
+                                                        'logic': 'string',
+                                                        'naturalLanguage': 'string'
+                                                    },
+                                                ],
+                                                'claims': [
+                                                    {
+                                                        'logic': 'string',
+                                                        'naturalLanguage': 'string'
+                                                    },
+                                                ],
+                                                'untranslatedPremises': [
+                                                    {
+                                                        'text': 'string'
+                                                    },
+                                                ],
+                                                'untranslatedClaims': [
+                                                    {
+                                                        'text': 'string'
+                                                    },
+                                                ],
+                                                'confidence': 123.0
+                                            },
+                                            'claimsTrueScenario': {
+                                                'statements': [
+                                                    {
+                                                        'logic': 'string',
+                                                        'naturalLanguage': 'string'
+                                                    },
+                                                ]
+                                            },
+                                            'claimsFalseScenario': {
+                                                'statements': [
+                                                    {
+                                                        'logic': 'string',
+                                                        'naturalLanguage': 'string'
+                                                    },
+                                                ]
+                                            },
+                                            'logicWarning': {
+                                                'type': 'ALWAYS_FALSE'|'ALWAYS_TRUE',
+                                                'premises': [
+                                                    {
+                                                        'logic': 'string',
+                                                        'naturalLanguage': 'string'
+                                                    },
+                                                ],
+                                                'claims': [
+                                                    {
+                                                        'logic': 'string',
+                                                        'naturalLanguage': 'string'
+                                                    },
+                                                ]
+                                            }
+                                        },
+                                        'impossible': {
+                                            'translation': {
+                                                'premises': [
+                                                    {
+                                                        'logic': 'string',
+                                                        'naturalLanguage': 'string'
+                                                    },
+                                                ],
+                                                'claims': [
+                                                    {
+                                                        'logic': 'string',
+                                                        'naturalLanguage': 'string'
+                                                    },
+                                                ],
+                                                'untranslatedPremises': [
+                                                    {
+                                                        'text': 'string'
+                                                    },
+                                                ],
+                                                'untranslatedClaims': [
+                                                    {
+                                                        'text': 'string'
+                                                    },
+                                                ],
+                                                'confidence': 123.0
+                                            },
+                                            'contradictingRules': [
+                                                {
+                                                    'identifier': 'string',
+                                                    'policyVersionArn': 'string'
+                                                },
+                                            ],
+                                            'logicWarning': {
+                                                'type': 'ALWAYS_FALSE'|'ALWAYS_TRUE',
+                                                'premises': [
+                                                    {
+                                                        'logic': 'string',
+                                                        'naturalLanguage': 'string'
+                                                    },
+                                                ],
+                                                'claims': [
+                                                    {
+                                                        'logic': 'string',
+                                                        'naturalLanguage': 'string'
+                                                    },
+                                                ]
+                                            }
+                                        },
+                                        'translationAmbiguous': {
+                                            'options': [
+                                                {
+                                                    'translations': [
+                                                        {
+                                                            'premises': [
+                                                                {
+                                                                    'logic': 'string',
+                                                                    'naturalLanguage': 'string'
+                                                                },
+                                                            ],
+                                                            'claims': [
+                                                                {
+                                                                    'logic': 'string',
+                                                                    'naturalLanguage': 'string'
+                                                                },
+                                                            ],
+                                                            'untranslatedPremises': [
+                                                                {
+                                                                    'text': 'string'
+                                                                },
+                                                            ],
+                                                            'untranslatedClaims': [
+                                                                {
+                                                                    'text': 'string'
+                                                                },
+                                                            ],
+                                                            'confidence': 123.0
+                                                        },
+                                                    ]
+                                                },
+                                            ],
+                                            'differenceScenarios': [
+                                                {
+                                                    'statements': [
+                                                        {
+                                                            'logic': 'string',
+                                                            'naturalLanguage': 'string'
+                                                        },
+                                                    ]
+                                                },
+                                            ]
+                                        },
+                                        'tooComplex': {},
+                                        'noTranslations': {}
+                                    },
+                                ]
+                            },
+                            'invocationMetrics': {
+                                'guardrailProcessingLatency': 123,
+                                'usage': {
+                                    'topicPolicyUnits': 123,
+                                    'contentPolicyUnits': 123,
+                                    'wordPolicyUnits': 123,
+                                    'sensitiveInformationPolicyUnits': 123,
+                                    'sensitiveInformationPolicyFreeUnits': 123,
+                                    'contextualGroundingPolicyUnits': 123,
+                                    'contentPolicyImageUnits': 123,
+                                    'automatedReasoningPolicyUnits': 123,
+                                    'automatedReasoningPolicies': 123
+                                },
+                                'guardrailCoverage': {
+                                    'textCharacters': {
+                                        'guarded': 123,
+                                        'total': 123
+                                    },
+                                    'images': {
+                                        'guarded': 123,
+                                        'total': 123
+                                    }
+                                }
+                            },
+                            'appliedGuardrailDetails': {
+                                'guardrailId': 'string',
+                                'guardrailVersion': 'string',
+                                'guardrailArn': 'string',
+                                'guardrailOrigin': [
+                                    'REQUEST'|'ACCOUNT_ENFORCED'|'ORGANIZATION_ENFORCED',
+                                ],
+                                'guardrailOwnership': 'SELF'|'CROSS_ACCOUNT'
+                            }
+                        }
+                    },
+                    'outputAssessments': {
+                        'string': [
+                            {
+                                'topicPolicy': {
+                                    'topics': [
+                                        {
+                                            'name': 'string',
+                                            'type': 'DENY',
+                                            'action': 'BLOCKED'|'NONE',
+                                            'detected': True|False
+                                        },
+                                    ]
+                                },
+                                'contentPolicy': {
+                                    'filters': [
+                                        {
+                                            'type': 'INSULTS'|'HATE'|'SEXUAL'|'VIOLENCE'|'MISCONDUCT'|'PROMPT_ATTACK',
+                                            'confidence': 'NONE'|'LOW'|'MEDIUM'|'HIGH',
+                                            'filterStrength': 'NONE'|'LOW'|'MEDIUM'|'HIGH',
+                                            'action': 'BLOCKED'|'NONE',
+                                            'detected': True|False
+                                        },
+                                    ]
+                                },
+                                'wordPolicy': {
+                                    'customWords': [
+                                        {
+                                            'match': 'string',
+                                            'action': 'BLOCKED'|'NONE',
+                                            'detected': True|False
+                                        },
+                                    ],
+                                    'managedWordLists': [
+                                        {
+                                            'match': 'string',
+                                            'type': 'PROFANITY',
+                                            'action': 'BLOCKED'|'NONE',
+                                            'detected': True|False
+                                        },
+                                    ]
+                                },
+                                'sensitiveInformationPolicy': {
+                                    'piiEntities': [
+                                        {
+                                            'match': 'string',
+                                            'type': 'ADDRESS'|'AGE'|'AWS_ACCESS_KEY'|'AWS_SECRET_KEY'|'CA_HEALTH_NUMBER'|'CA_SOCIAL_INSURANCE_NUMBER'|'CREDIT_DEBIT_CARD_CVV'|'CREDIT_DEBIT_CARD_EXPIRY'|'CREDIT_DEBIT_CARD_NUMBER'|'DRIVER_ID'|'EMAIL'|'INTERNATIONAL_BANK_ACCOUNT_NUMBER'|'IP_ADDRESS'|'LICENSE_PLATE'|'MAC_ADDRESS'|'NAME'|'PASSWORD'|'PHONE'|'PIN'|'SWIFT_CODE'|'UK_NATIONAL_HEALTH_SERVICE_NUMBER'|'UK_NATIONAL_INSURANCE_NUMBER'|'UK_UNIQUE_TAXPAYER_REFERENCE_NUMBER'|'URL'|'USERNAME'|'US_BANK_ACCOUNT_NUMBER'|'US_BANK_ROUTING_NUMBER'|'US_INDIVIDUAL_TAX_IDENTIFICATION_NUMBER'|'US_PASSPORT_NUMBER'|'US_SOCIAL_SECURITY_NUMBER'|'VEHICLE_IDENTIFICATION_NUMBER',
+                                            'action': 'ANONYMIZED'|'BLOCKED'|'NONE',
+                                            'detected': True|False
+                                        },
+                                    ],
+                                    'regexes': [
+                                        {
+                                            'name': 'string',
+                                            'match': 'string',
+                                            'regex': 'string',
+                                            'action': 'ANONYMIZED'|'BLOCKED'|'NONE',
+                                            'detected': True|False
+                                        },
+                                    ]
+                                },
+                                'contextualGroundingPolicy': {
+                                    'filters': [
+                                        {
+                                            'type': 'GROUNDING'|'RELEVANCE',
+                                            'threshold': 123.0,
+                                            'score': 123.0,
+                                            'action': 'BLOCKED'|'NONE',
+                                            'detected': True|False
+                                        },
+                                    ]
+                                },
+                                'automatedReasoningPolicy': {
+                                    'findings': [
+                                        {
+                                            'valid': {
+                                                'translation': {
+                                                    'premises': [
+                                                        {
+                                                            'logic': 'string',
+                                                            'naturalLanguage': 'string'
+                                                        },
+                                                    ],
+                                                    'claims': [
+                                                        {
+                                                            'logic': 'string',
+                                                            'naturalLanguage': 'string'
+                                                        },
+                                                    ],
+                                                    'untranslatedPremises': [
+                                                        {
+                                                            'text': 'string'
+                                                        },
+                                                    ],
+                                                    'untranslatedClaims': [
+                                                        {
+                                                            'text': 'string'
+                                                        },
+                                                    ],
+                                                    'confidence': 123.0
+                                                },
+                                                'claimsTrueScenario': {
+                                                    'statements': [
+                                                        {
+                                                            'logic': 'string',
+                                                            'naturalLanguage': 'string'
+                                                        },
+                                                    ]
+                                                },
+                                                'supportingRules': [
+                                                    {
+                                                        'identifier': 'string',
+                                                        'policyVersionArn': 'string'
+                                                    },
+                                                ],
+                                                'logicWarning': {
+                                                    'type': 'ALWAYS_FALSE'|'ALWAYS_TRUE',
+                                                    'premises': [
+                                                        {
+                                                            'logic': 'string',
+                                                            'naturalLanguage': 'string'
+                                                        },
+                                                    ],
+                                                    'claims': [
+                                                        {
+                                                            'logic': 'string',
+                                                            'naturalLanguage': 'string'
+                                                        },
+                                                    ]
+                                                }
+                                            },
+                                            'invalid': {
+                                                'translation': {
+                                                    'premises': [
+                                                        {
+                                                            'logic': 'string',
+                                                            'naturalLanguage': 'string'
+                                                        },
+                                                    ],
+                                                    'claims': [
+                                                        {
+                                                            'logic': 'string',
+                                                            'naturalLanguage': 'string'
+                                                        },
+                                                    ],
+                                                    'untranslatedPremises': [
+                                                        {
+                                                            'text': 'string'
+                                                        },
+                                                    ],
+                                                    'untranslatedClaims': [
+                                                        {
+                                                            'text': 'string'
+                                                        },
+                                                    ],
+                                                    'confidence': 123.0
+                                                },
+                                                'contradictingRules': [
+                                                    {
+                                                        'identifier': 'string',
+                                                        'policyVersionArn': 'string'
+                                                    },
+                                                ],
+                                                'logicWarning': {
+                                                    'type': 'ALWAYS_FALSE'|'ALWAYS_TRUE',
+                                                    'premises': [
+                                                        {
+                                                            'logic': 'string',
+                                                            'naturalLanguage': 'string'
+                                                        },
+                                                    ],
+                                                    'claims': [
+                                                        {
+                                                            'logic': 'string',
+                                                            'naturalLanguage': 'string'
+                                                        },
+                                                    ]
+                                                }
+                                            },
+                                            'satisfiable': {
+                                                'translation': {
+                                                    'premises': [
+                                                        {
+                                                            'logic': 'string',
+                                                            'naturalLanguage': 'string'
+                                                        },
+                                                    ],
+                                                    'claims': [
+                                                        {
+                                                            'logic': 'string',
+                                                            'naturalLanguage': 'string'
+                                                        },
+                                                    ],
+                                                    'untranslatedPremises': [
+                                                        {
+                                                            'text': 'string'
+                                                        },
+                                                    ],
+                                                    'untranslatedClaims': [
+                                                        {
+                                                            'text': 'string'
+                                                        },
+                                                    ],
+                                                    'confidence': 123.0
+                                                },
+                                                'claimsTrueScenario': {
+                                                    'statements': [
+                                                        {
+                                                            'logic': 'string',
+                                                            'naturalLanguage': 'string'
+                                                        },
+                                                    ]
+                                                },
+                                                'claimsFalseScenario': {
+                                                    'statements': [
+                                                        {
+                                                            'logic': 'string',
+                                                            'naturalLanguage': 'string'
+                                                        },
+                                                    ]
+                                                },
+                                                'logicWarning': {
+                                                    'type': 'ALWAYS_FALSE'|'ALWAYS_TRUE',
+                                                    'premises': [
+                                                        {
+                                                            'logic': 'string',
+                                                            'naturalLanguage': 'string'
+                                                        },
+                                                    ],
+                                                    'claims': [
+                                                        {
+                                                            'logic': 'string',
+                                                            'naturalLanguage': 'string'
+                                                        },
+                                                    ]
+                                                }
+                                            },
+                                            'impossible': {
+                                                'translation': {
+                                                    'premises': [
+                                                        {
+                                                            'logic': 'string',
+                                                            'naturalLanguage': 'string'
+                                                        },
+                                                    ],
+                                                    'claims': [
+                                                        {
+                                                            'logic': 'string',
+                                                            'naturalLanguage': 'string'
+                                                        },
+                                                    ],
+                                                    'untranslatedPremises': [
+                                                        {
+                                                            'text': 'string'
+                                                        },
+                                                    ],
+                                                    'untranslatedClaims': [
+                                                        {
+                                                            'text': 'string'
+                                                        },
+                                                    ],
+                                                    'confidence': 123.0
+                                                },
+                                                'contradictingRules': [
+                                                    {
+                                                        'identifier': 'string',
+                                                        'policyVersionArn': 'string'
+                                                    },
+                                                ],
+                                                'logicWarning': {
+                                                    'type': 'ALWAYS_FALSE'|'ALWAYS_TRUE',
+                                                    'premises': [
+                                                        {
+                                                            'logic': 'string',
+                                                            'naturalLanguage': 'string'
+                                                        },
+                                                    ],
+                                                    'claims': [
+                                                        {
+                                                            'logic': 'string',
+                                                            'naturalLanguage': 'string'
+                                                        },
+                                                    ]
+                                                }
+                                            },
+                                            'translationAmbiguous': {
+                                                'options': [
+                                                    {
+                                                        'translations': [
+                                                            {
+                                                                'premises': [
+                                                                    {
+                                                                        'logic': 'string',
+                                                                        'naturalLanguage': 'string'
+                                                                    },
+                                                                ],
+                                                                'claims': [
+                                                                    {
+                                                                        'logic': 'string',
+                                                                        'naturalLanguage': 'string'
+                                                                    },
+                                                                ],
+                                                                'untranslatedPremises': [
+                                                                    {
+                                                                        'text': 'string'
+                                                                    },
+                                                                ],
+                                                                'untranslatedClaims': [
+                                                                    {
+                                                                        'text': 'string'
+                                                                    },
+                                                                ],
+                                                                'confidence': 123.0
+                                                            },
+                                                        ]
+                                                    },
+                                                ],
+                                                'differenceScenarios': [
+                                                    {
+                                                        'statements': [
+                                                            {
+                                                                'logic': 'string',
+                                                                'naturalLanguage': 'string'
+                                                            },
+                                                        ]
+                                                    },
+                                                ]
+                                            },
+                                            'tooComplex': {},
+                                            'noTranslations': {}
+                                        },
+                                    ]
+                                },
+                                'invocationMetrics': {
+                                    'guardrailProcessingLatency': 123,
+                                    'usage': {
+                                        'topicPolicyUnits': 123,
+                                        'contentPolicyUnits': 123,
+                                        'wordPolicyUnits': 123,
+                                        'sensitiveInformationPolicyUnits': 123,
+                                        'sensitiveInformationPolicyFreeUnits': 123,
+                                        'contextualGroundingPolicyUnits': 123,
+                                        'contentPolicyImageUnits': 123,
+                                        'automatedReasoningPolicyUnits': 123,
+                                        'automatedReasoningPolicies': 123
+                                    },
+                                    'guardrailCoverage': {
+                                        'textCharacters': {
+                                            'guarded': 123,
+                                            'total': 123
+                                        },
+                                        'images': {
+                                            'guarded': 123,
+                                            'total': 123
+                                        }
+                                    }
+                                },
+                                'appliedGuardrailDetails': {
+                                    'guardrailId': 'string',
+                                    'guardrailVersion': 'string',
+                                    'guardrailArn': 'string',
+                                    'guardrailOrigin': [
+                                        'REQUEST'|'ACCOUNT_ENFORCED'|'ORGANIZATION_ENFORCED',
+                                    ],
+                                    'guardrailOwnership': 'SELF'|'CROSS_ACCOUNT'
+                                }
+                            },
+                        ]
+                    },
+                    'actionReason': 'string'
+                },
+                'promptRouter': {
+                    'invokedModelId': 'string'
+                }
+            },
+            'performanceConfig': {
+                'latency': 'standard'|'optimized'
+            },
+            'serviceTier': {
+                'type': 'priority'|'default'|'flex'|'reserved'
+            }
+        }
+
+
+        **Response Structure**
+        ::
+
+            # This section is too large to render.
+            # Please see the AWS API Documentation linked below.
+
+        `AWS API Documentation <https://docs.aws.amazon.com/goto/WebAPI/bedrock-runtime-2023-09-30/Converse>`_
+
